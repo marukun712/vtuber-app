@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+  <meta charset="utf-8" />
+  <!-- HTML Meta Tags -->
+  <title>Vtuber配信システム(viewer)</title>
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+  <!--     Basic Three.js -->
+  <script src="https://unpkg.com/three@0.133.0/build/three.js"></script>
+  <!--     GLTF Loader for Three.js -->
+  <script src="https://unpkg.com/three@0.133.0/examples/js/loaders/GLTFLoader.js"></script>
+  <!--     Orbit Controls for Three.js -->
+  <script src="https://unpkg.com/three@0.133.0/examples/js/controls/OrbitControls.js"></script>
+  <!--     VRM Loader for Three.js -->
+  <script src="https://unpkg.com/@pixiv/three-vrm@0.6.7/lib/three-vrm.js"></script>
+  <!--     Mediapipe or Tensorflow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.5.1635989137/holistic.js"
+    crossorigin="anonymous"></script>
+  <!--     Mediapipe Drawing Tools -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <!--     Mediapipe Camera Tools -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+    integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="./src/style/style.css" />
+  <link rel="stylesheet" href="./dist/output.css" />
+</head>
+
+<body>
+  <script src="./src/script/RealTimeViewer.js" type="module" defer></script>
+</body>
+
+</html>
