@@ -1,7 +1,7 @@
 # vtuber-app 
 
 # Overview
-kalidokitのトラッキング結果をリアルタイムに表示できるアプリ。
+kalidokitのトラッキング結果を複数端末からリアルタイムに表示できるアプリ。
 
 # installation
 
