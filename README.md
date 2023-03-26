@@ -3,6 +3,8 @@
 # Overview
 kalidokitのトラッキング結果を複数端末からリアルタイムに表示できるアプリ。
 
+# DEMO
+![demo](/demo.gif)
 # installation
 
 依存パッケージをインストール。
