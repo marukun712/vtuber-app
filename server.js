@@ -12,8 +12,8 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-    socket.on('motion', (results) => {
-        io.emit('receiveMotion', results);
+    socket.on('motion', (target, results) => {
+        io.emit('receiveMotion', target, results);
     });
 });
 

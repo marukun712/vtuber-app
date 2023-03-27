@@ -3,7 +3,8 @@ import { animateVRM } from './AnimateVRM'
 const socket = io('http://localhost:3000');
 
 /* THREEJSの設定 */
-let currentVrm;
+let firstModel;
+let secondModel;
 
 // renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -35,9 +36,10 @@ const clock = new THREE.Clock();
 function animate() {
     requestAnimationFrame(animate);
 
-    if (currentVrm) {
+    if (firstModel && secondModel) {
         // Update model to render physics
-        currentVrm.update(clock.getDelta());
+        firstModel.update(clock.getDelta());
+        secondModel.update(clock.getDelta());
     }
     renderer.render(scene, orbitCamera);
 }
@@ -56,8 +58,28 @@ loader.load(
 
         THREE.VRM.from(gltf).then((vrm) => {
             scene.add(vrm.scene);
-            currentVrm = vrm;
-            currentVrm.scene.rotation.y = Math.PI; // Rotate model 180deg to face camera
+            firstModel = vrm;
+            firstModel.scene.position.set(-1, 0, 0);
+            firstModel.scene.rotation.y = Math.PI; // Rotate model 180deg to face camera
+        });
+    },
+
+    (progress) => console.log("Loading model...", 100.0 * (progress.loaded / progress.total), "%"),
+
+    (error) => console.error(error)
+);
+
+loader.load(
+    "../src/models/sample.vrm",
+
+    (gltf) => {
+        THREE.VRMUtils.removeUnnecessaryJoints(gltf.scene);
+
+        THREE.VRM.from(gltf).then((vrm) => {
+            scene.add(vrm.scene);
+            secondModel = vrm;
+            secondModel.scene.position.set(1, 0, 0);
+            secondModel.scene.rotation.y = Math.PI; // Rotate model 180deg to face camera
         });
     },
 
@@ -68,8 +90,11 @@ loader.load(
 
 let videoElement = document.querySelector(".input_video");
 
-socket.on('receiveMotion', (results) => {
-    // モデルを動かす
-    animateVRM(currentVrm, results, videoElement);
+socket.on('receiveMotion', (target, results) => {
+    if (target === 'First') {
+        animateVRM(firstModel, results, videoElement);
+    } else {
+        animateVRM(secondModel, results, videoElement);
+    }
 });
 

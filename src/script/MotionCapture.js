@@ -3,10 +3,10 @@ import { animateVRM } from './AnimateVRM'
 import { drawResults } from "./draw";
 import { PostData } from "./WebSocket";
 const socket = io('http://localhost:3000');
+let target = 'First';
 
 /* THREEJSの設定 */
 let currentVrm;
-
 // renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -74,7 +74,7 @@ let videoElement = document.querySelector(".input_video"),
 
 const onResults = (results) => {
     //WebSocketでデータを送信する
-    PostData(results)
+    PostData(target, results)
     // 結果を描画する
     drawResults(results, guideCanvas, videoElement);
     // モデルを動かす
@@ -107,3 +107,12 @@ const camera = new Camera(videoElement, {
 });
 camera.start();
 
+document.getElementById('changeModel').onclick = function () {
+    if (target === 'First') {
+        target = 'Second';
+        console.log(target)
+    } else {
+        target = 'First';
+        console.log(target)
+    }
+}
