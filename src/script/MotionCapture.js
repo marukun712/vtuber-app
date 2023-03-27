@@ -2,7 +2,8 @@ import * as Kalidokit from "kalidokit";
 import { animateVRM } from './AnimateVRM'
 import { drawResults } from "./draw";
 import { PostData } from "./WebSocket";
-const socket = io('http://localhost:3000');
+
+//動かすモデルを指定
 let target = 'First';
 
 /* THREEJSの設定 */
@@ -45,7 +46,6 @@ function animate() {
 }
 animate();
 
-/* VRM CHARACTER SETUP */
 // VRMモデルを読み込む
 const loader = new THREE.GLTFLoader();
 loader.crossOrigin = "anonymous";
@@ -68,10 +68,11 @@ loader.load(
     (error) => console.error(error)
 );
 
-/*MEDIAPIPE HOLISTICの設定 */
+//DOMを読み込み
 let videoElement = document.querySelector(".input_video"),
     guideCanvas = document.querySelector("canvas.guides");
 
+//トラッキング後のコールバック関数
 const onResults = (results) => {
     //WebSocketでデータを送信する
     PostData(target, results)
@@ -81,6 +82,7 @@ const onResults = (results) => {
     animateVRM(currentVrm, results, videoElement);
 };
 
+/*MEDIAPIPE HOLISTICの設定 */
 const holistic = new Holistic({
     locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.5.1635989137/${file}`;
@@ -107,6 +109,7 @@ const camera = new Camera(videoElement, {
 });
 camera.start();
 
+//Targetの切り替え
 document.getElementById('changeModel').onclick = function () {
     if (target === 'First') {
         target = 'Second';

@@ -1,6 +1,6 @@
 import * as Kalidokit from "kalidokit";
 import { animateVRM } from './AnimateVRM'
-const socket = io('http://localhost:3000');
+import { socket } from './WebSocket'
 
 /* THREEJSの設定 */
 let firstModel;
@@ -45,11 +45,11 @@ function animate() {
 }
 animate();
 
-/* VRM CHARACTER SETUP */
 // VRMモデルを読み込む
 const loader = new THREE.GLTFLoader();
 loader.crossOrigin = "anonymous";
 // Import model from URL, add your own model here
+//1つ目のモデルを読み込み
 loader.load(
     "https://cdn.glitch.com/29e07830-2317-4b15-a044-135e73c7f840%2FAshtra.vrm?v=1630342336981",
 
@@ -69,6 +69,7 @@ loader.load(
     (error) => console.error(error)
 );
 
+//2つ目のモデルを読み込み
 loader.load(
     "../src/models/sample.vrm",
 
@@ -88,10 +89,14 @@ loader.load(
     (error) => console.error(error)
 );
 
+//DOMを読み込み
 let videoElement = document.querySelector(".input_video");
 
+//WebSocketでモーションデータとターゲットを受けた時の処理
 socket.on('receiveMotion', (target, results) => {
+    //ターゲットに応じて動かすモデルを変える
     if (target === 'First') {
+        //モデルを動かす
         animateVRM(firstModel, results, videoElement);
     } else {
         animateVRM(secondModel, results, videoElement);

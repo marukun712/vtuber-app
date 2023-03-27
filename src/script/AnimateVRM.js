@@ -1,7 +1,7 @@
 import * as Kalidokit from "kalidokit";
 import { rigRotation, rigPosition, rigFace } from './rig'
 
-/* VRMモデルを動かす */
+/* VRMモデルを動かす関数 */
 export const animateVRM = (vrm, results, videoElement) => {
     if (!vrm) {
         return;
